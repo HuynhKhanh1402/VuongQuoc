@@ -1,0 +1,10 @@
+name: VuongQuoc
+version: '1.0'
+main: dev.khanh.plugin.vuongquoc.RealmPlugin
+api-version: '1.18'
+authors: [ KhanhHuynh ]
+depend:
+  - PlaceholderAPI
+  - WorldGuard
+softdepend:
+  - ItemsAdder

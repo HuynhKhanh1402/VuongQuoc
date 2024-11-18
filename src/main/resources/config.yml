@@ -1,0 +1,28 @@
+config-version: 1
+
+general:
+  allow-realm-member-pvp: false
+  # Danh sách regions cho phép thành viên cùng vương quốc có thể pvp
+  allow-realm-member-pvp-regions:
+    - pvp
+  # Lệnh sau sẽ được  hiện khi người chơi dùng lệnh spawn khi không có vương quốc hoặc
+  # vương quốc chưa set tọa độ spawn.
+  # Lưu ý: Không có dấu '/'
+  spawn-fallback-command: "lobby"
+
+realms:
+  kim:
+    display: "&#C0C0C0&lKIM&r"
+    color: "&#C0C0C0"
+  moc:
+    display: "&#228B22MỘC&r"
+    color: "&#228B22"
+  thuy:
+    display: "&#1E90FFTHỦY&r"
+    color: "&#1E90FF"
+  hoa:
+    display: "&#FF4500HỎA&r"
+    color: "&#FF4500"
+  tho:
+    display: "&#8B4513THỔ&r"
+    color: "&#8B4513"

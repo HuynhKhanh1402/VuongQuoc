@@ -1,0 +1,5 @@
+prefix: "&7&b[Vương Quốc&7] &r"
+no-perm: "&cBạn không có quyền dùng lệnh này!"
+command-syntax-error: "&cSai cú pháp! &7Cú pháp: &e{usage}"
+joined-realm: "&aChức mừng bạn đã gia nhập thành công vương quốc {realm}"
+spawn-message: "&aĐã dịch chuyển bạn về spawn của vương quốc {realm}"
