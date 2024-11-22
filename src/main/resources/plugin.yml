@@ -6,5 +6,3 @@ authors: [ KhanhHuynh ]
 depend:
   - PlaceholderAPI
   - WorldGuard
-softdepend:
-  - ItemsAdder
