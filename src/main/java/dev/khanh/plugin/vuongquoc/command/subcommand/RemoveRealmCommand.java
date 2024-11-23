@@ -31,7 +31,7 @@ public class RemoveRealmCommand extends BukkitCommand {
     public void onCommand(CommandSender sender, List<String> args) {
         UserManager userManager = plugin.getUserManager();
 
-        if (args.size() < 2 || args.size() > 4) {
+        if (args.size() != 1) {
             sender.sendMessage(getUnknownCommandMessage());
             return;
         }
@@ -57,7 +57,7 @@ public class RemoveRealmCommand extends BukkitCommand {
                     ChatColor.GREEN + "Người chơi %s đã bị xoá khỏi vương %s".formatted(playerName, realm.getDisplay()));
             MessageUtil.sendMessage(player, "removed-from-realm",
                     s -> s.replace("{realm}", realm.getDisplay())
-                            .replace("{commander}", sender instanceof Player ? ((Player) sender).getName() : "CONSOLE")
+                            .replace("{commander}", sender instanceof Player ? sender.getName() : "CONSOLE")
             );
         }).exceptionally(throwable -> {
             throwable.printStackTrace();
@@ -66,7 +66,7 @@ public class RemoveRealmCommand extends BukkitCommand {
             sender.sendMessage(ChatColor.RED + String.format("%s: %s", throwable.getClass().getName(), throwable.getMessage()));
 
             throw new RuntimeException();
-        });;
+        });
     }
 
     @Override
