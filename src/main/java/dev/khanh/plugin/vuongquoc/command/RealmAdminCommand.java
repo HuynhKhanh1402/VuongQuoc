@@ -4,13 +4,12 @@ import dev.khanh.plugin.kplugin.command.BukkitCommand;
 import dev.khanh.plugin.kplugin.util.ColorUtil;
 import dev.khanh.plugin.kplugin.util.MessageUtil;
 import dev.khanh.plugin.vuongquoc.RealmPlugin;
+import dev.khanh.plugin.vuongquoc.command.subcommand.RemoveRealmCommand;
 import dev.khanh.plugin.vuongquoc.command.subcommand.SetRealmCommand;
 import dev.khanh.plugin.vuongquoc.command.subcommand.SetSpawnCommand;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,6 +24,7 @@ public class RealmAdminCommand extends BukkitCommand {
                 null, "/realmadmin &d<args>");
 
         try {
+            addSubCommand(new RemoveRealmCommand(this, plugin));
             addSubCommand(new SetRealmCommand(this, plugin));
             addSubCommand(new SetSpawnCommand(this, plugin));
 

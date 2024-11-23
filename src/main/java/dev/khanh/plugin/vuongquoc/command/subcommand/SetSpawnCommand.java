@@ -20,7 +20,8 @@ public class SetSpawnCommand extends BukkitCommand {
     private final RealmPlugin plugin;
 
     public SetSpawnCommand(RealmAdminCommand parent, RealmPlugin plugin) {
-        super("setspawn", parent, null, null, "/realmadmin setspawn &d<realm>");
+        super("setspawn", parent, null, "Thiệt lập tọa độ spawn của vương quốc",
+                "/realmadmin setspawn &d<realm>");
         this.parent = parent;
         this.plugin = plugin;
     }

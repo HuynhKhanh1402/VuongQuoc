@@ -17,13 +17,13 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class SetRealmCommand extends BukkitCommand {
+public class RemoveRealmCommand extends BukkitCommand {
     private final RealmAdminCommand parent;
     private final RealmPlugin plugin;
 
-    public SetRealmCommand(RealmAdminCommand parent, RealmPlugin plugin) {
-        super("setrealm", parent, null, "Thêm người chơi vào vương quốc",
-                "/realmadmin setrealm &d<player> &d<realm> &b[force] &b[silent]");
+    public RemoveRealmCommand(RealmAdminCommand parent, RealmPlugin plugin) {
+        super("removerealm", parent, null, "Xóa người chơi khỏi vương quốc",
+                "/realmadmin removerealm &d<player>");
         this.parent = parent;
         this.plugin = plugin;
     }
@@ -45,37 +45,20 @@ public class SetRealmCommand extends BukkitCommand {
         User user = userManager.getUser(player);
         String playerName = args.get(0);
 
-        Realm realm = plugin.getRealmManager().getRealm(args.get(1)).orElse(null);
-        if (realm == null) {
-            MessageUtil.sendMessageWithPrefix(sender, ChatColor.RED + "Không tìm thấy vương quốc: " + args.get(0));
+        if (user.getRealm() == null) {
+            MessageUtil.sendMessageWithPrefix(sender,
+                    ChatColor.YELLOW + "Người chơi %s hiện không ở bất kỳ vương quốc nào.".formatted(playerName));
             return;
         }
+        Realm realm = user.getRealm();
 
-        boolean force = args.size() >= 3 && Boolean.parseBoolean(args.get(2));
-        boolean silent = args.size() == 4 && Boolean.parseBoolean(args.get(3));
-
-        if (realm.equals(user.getRealm())) {
-            if (!silent) {
-                MessageUtil.sendMessageWithPrefix(sender, ChatColor.YELLOW +
-                        "Người chơi %s hiện đã ở vương quốc %s".formatted(playerName, realm.getDisplay()));
-            }
-            return;
-        }
-
-        if (!force) {
-            if (user.getRealm() != null && !realm.equals(user.getRealm())) {
-                if (!silent) {
-                    MessageUtil.sendMessageWithPrefix(sender, ChatColor.YELLOW +
-                            "Người chơi %s hiện đang ở vương quốc %s".formatted(playerName, user.getRealm().getDisplay()));
-                }
-                return;
-            }
-        }
-
-        user.setRealm(realm).thenRun(() -> {
-            MessageUtil.sendMessageWithPrefix(sender, ChatColor.GREEN +
-                    "Đã đặt thành công người chơi %s vào vương quốc %s".formatted(playerName, realm.getDisplay()));
-            MessageUtil.sendMessage(player, "joined-realm", s -> s.replace("{realm}", realm.getDisplay()));
+        user.setRealm(null).thenRun(() -> {
+            MessageUtil.sendMessageWithPrefix(sender,
+                    ChatColor.GREEN + "Người chơi %s đã bị xoá khỏi vương %s".formatted(playerName, realm.getDisplay()));
+            MessageUtil.sendMessage(player, "removed-from-realm",
+                    s -> s.replace("{realm}", realm.getDisplay())
+                            .replace("{commander}", sender instanceof Player ? ((Player) sender).getName() : "CONSOLE")
+            );
         }).exceptionally(throwable -> {
             throwable.printStackTrace();
 
@@ -83,7 +66,7 @@ public class SetRealmCommand extends BukkitCommand {
             sender.sendMessage(ChatColor.RED + String.format("%s: %s", throwable.getClass().getName(), throwable.getMessage()));
 
             throw new RuntimeException();
-        });
+        });;
     }
 
     @Override
