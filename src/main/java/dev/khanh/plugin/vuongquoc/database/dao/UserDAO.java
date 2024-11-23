@@ -95,4 +95,23 @@ public class UserDAO {
                     throw new RuntimeException();
                 });
     }
+
+    public CompletableFuture<Integer> getRealmMemberCount(String realm) {
+        return CompletableFuture.supplyAsync(() -> {
+            try (Connection connection = dataSource.getConnection()){
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) AS MEMBERS FROM " + TABLE_NAME + " WHERE realm = ?");
+                preparedStatement.setString(1, realm);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getInt("MEMBERS");
+                }
+                return 0;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }).exceptionally(throwable -> {
+            throwable.printStackTrace();
+            throw new RuntimeException();
+        });
+    }
 }

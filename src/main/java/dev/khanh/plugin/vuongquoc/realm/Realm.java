@@ -10,16 +10,22 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 public class Realm {
 
+    private final RealmManager manager;
     private final String name;
     private final String display;
     private final String color;
     @Setter
     private Location spawnLocation;
 
-    public Realm(String name, String display, String color, @Nullable Location spawnLocation) {
+    public Realm(RealmManager manager, String name, String display, String color, @Nullable Location spawnLocation) {
+        this.manager = manager;
         this.name = name;
         this.display = ColorUtil.colorize(PlaceholderAPI.setBracketPlaceholders(null, display));
         this.color = color;
         this.spawnLocation = spawnLocation;
+    }
+
+    public int getMemberCount() {
+        return manager.getRealmMemberCount(this);
     }
 }
