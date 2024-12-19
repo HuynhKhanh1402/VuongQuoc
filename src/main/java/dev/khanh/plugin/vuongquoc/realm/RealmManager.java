@@ -70,6 +70,6 @@ public class RealmManager {
                 int memberCount = userDAO.getRealmMemberCount(realm).join();
                 realmMemberCount.put(realm, memberCount);
             }
-        }, 0, 5);
+        }, 0, 20);
     }
 }

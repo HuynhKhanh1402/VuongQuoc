@@ -34,11 +34,11 @@ public final class RealmPlugin extends KPlugin {
         messageFile = new MessageFile(this);
         InstanceManager.registerInstance(MessageFile.class, messageFile);
 
-        realmManager = new RealmManager(this);
-        InstanceManager.registerInstance(RealmManager.class, realmManager);
-
         databaseManager = new DatabaseManager(this);
         InstanceManager.registerInstance(DatabaseManager.class, databaseManager);
+
+        realmManager = new RealmManager(this);
+        InstanceManager.registerInstance(RealmManager.class, realmManager);
 
         userManager = new UserManager(this);
         InstanceManager.registerInstance(UserManager.class, userManager);
